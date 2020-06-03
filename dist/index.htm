@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>DR</title>
+  <link rel="stylesheet" type="text/css" href="bundle.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<style>
+
+table {
+  border-collapse: collapse;
+  width: 80%;
+}
+
+table, th, td {
+  border: 1px solid black;
+  margin-top: 1em;
+  margin-left: 1em;
+  padding: 5px;
+}
+
+
+thead tr th:first-child,
+tbody tr td:first-child {
+  width: 40px;
+  min-width: 2em;
+  max-width: 2em;
+  word-break: break-all;
+}
+/* 
+  tr:nth-child(even) {
+    background-color: lightsteelblue;
+  } */
+
+.button {
+  transition-duration: 0.4s;
+}
+
+.button:hover {
+  background: lightblue;
+}
+
+tr:hover {
+  background-color: lightblue;
+}
+
+thead {
+  background-color: lightblue;
+}
+</style>
+
+<body>
+  <h1 style="margin-left: 15px; color: lightblue;">Danmarks Radio Music Collection</h1>
+  
+  <button class="button" onclick="ShowSearchInput()" style="margin-left: 1em; border: 2px; border-radius: 20px;" id=getAllButton>Get all records here!</button>
+  
+  <div id="AddDiv" style="display: none;">
+
+  <h3 style="margin-left: 15px; margin-top: 1em; color: black;">Add new record</h3>
+  <input style="margin-left: 1em;" id="addId" placeholder="Id" type="number" />
+  <input id="addTitle" placeholder="Title" />
+  <input id="addArtist" placeholder="Artist"  />
+  <input id="addAlbum" placeholder="Album"  />
+  <input id="addRecordLabel" placeholder="Record Label" />
+  <input id="addDurationInSeconds" placeholder="Duration in seconds" type="number" />
+  <input id="addYearOfPublication" placeholder="Year of publication" type="number"  />
+  <button id="addButton" onclick="HideAddDiv()">Add</button>
+  <span id="addRecordDiv" style="margin-left: 5px; font-size: x-large;"></span>
+  <div id="contentAdd"></div>
+</div>
+
+<div id="WantToAdd" style="display: none;">
+  <h3 style="margin-left: 15px; margin-top: 1em;">Want to add a music record?</h3>
+  <button class="button" id="clickHereAddButton" onclick="ShowAddInputs()" style="margin-left: 1em; border: 2px; border-radius: 20px;">Click Here</button>
+</div>
+
+<div id="WantToDelete" style="display: none;">
+  <h3 style="margin-left: 15px; margin-top: 1em;">Want to delete an already existing music record?</h3>
+  <button class="button" id="clickHereDeleteButton" onclick="ShowDeleteInputs()" style="margin-left: 1em; border: 2px; border-radius: 20px;">Click Here</button>
+</div>
+
+<div id="DeleteDiv" style="display: none;">
+  <h3 style="margin-left: 15px; margin-top: 1em; color: black;">Delete</h3>
+  <input style="margin-left: 15px;" id="deleteInput" placeholder="Id of music record" />
+  <button id="deleteButton">Delete</button>
+  <span id="contentDelete" style="margin-left: 5px; font-size: x-large;"></span>
+</div>
+
+<h3 style="margin-left: 15px; margin-top: 1em; display: none;" id="Search" >Search</h3>
+<input style="margin-left: 1em; display: none;" type="text" id="myInput" onkeyup="searchTable()" placeholder="Search for something..." title="Come on, type something!!"/>
+  <div id="output"></div>
+    
+<script src="bundle.js"></script>
+
+<script>
+function searchTable() {
+    var input, filter, found, table, tr, td, i, j;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("MusicList");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td");
+        for (j = 0; j < td.length; j++) {
+            if (td[j].innerHTML.toUpperCase().indexOf(filter) > -1) {
+                found = true;
+            }
+        }
+        if (found) {
+            tr[i].style.display = "";
+            found = false;
+        } else {
+            tr[i].style.display = "none";
+        }
+    }
+}
+</script>
+
+<script>
+  function ShowSearchInput() {
+  document.getElementById("myInput").style.display = "block";
+  document.getElementById("WantToAdd").style.display = "block";
+  document.getElementById("WantToDelete").style.display = "block";
+  document.getElementById("Search").style.display = "block";
+}
+
+function ShowAddInputs(){
+  document.getElementById("AddDiv").style.display = "block";
+  document.getElementById("WantToAdd").style.display = "none";
+}
+
+function ShowDeleteInputs(){
+document.getElementById("DeleteDiv").style.display = "block";
+document.getElementById("WantToDelete").style.display = "none";
+}
+
+function HideAddDiv(){
+  // document.getElementById("AddDiv").style.display = "none";
+  document.getElementById("WantToAdd").style.display = "none";
+}
+  </script>
+</body>
+</html>
+
+
